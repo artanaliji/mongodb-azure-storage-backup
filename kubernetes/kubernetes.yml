@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: db-bak-script
+  namespace: db-bak-script
+spec:
+  schedule: "00 00 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: db-bak-script
+            image: your-container-registry/image-name:${imageTag}
+            imagePullPolicy: Always
+            env:
+              - name: PYTHONUNBUFFERED
+                value: "0"
+          restartPolicy: OnFailure
